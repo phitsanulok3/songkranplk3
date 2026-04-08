@@ -7,8 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ไล่สีจากล่างเข้ม (Dark Gold) ไปบนอ่อน (Light Gold) */
-            --gold-grad: linear-gradient(0deg, #aa771c 0%, #b38728 40%, #fcf6ba 100%);
+            --gold-grad: linear-gradient(0deg, #8a5a12 0%, #b38728 50%, #fcf6ba 100%);
             --blue-deep: #001ba0;
         }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -20,15 +19,18 @@
         }
 
         .page { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
-        .page.active { display: block; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .page.active { display: block; }
 
-        .bg-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: -1; pointer-events: none; }
+        .bg-img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; 
+            position: absolute; top: 0; left: 0; z-index: -1; 
+            display: block !important; /* บังคับให้แสดงผล */
+        }
 
-        /* ปรับตำแหน่งปุ่มลงมาข้างล่าง */
         .btn-wrapper {
-            position: absolute; bottom: 5%; left: 0; width: 100%;
-            display: flex; flex-direction: column; align-items: center; z-index: 999;
+            position: absolute; bottom: 8%; left: 0; width: 100%;
+            display: flex; flex-direction: column; align-items: center; z-index: 100;
         }
         
         .btn-main {
@@ -36,46 +38,38 @@
             color: #403010; border: 2px solid #aa771c;
             padding: 16px 0; width: 85%; border-radius: 50px;
             font-size: 20px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
         }
-        .btn-main:active { transform: scale(0.95); }
 
-        /* ป้ายอวยพร ย้ายลงมาอยู่เหนือปุ่ม ไม่ให้บังหน้า */
         .blessing-overlay {
-            width: 85%; background: rgba(255, 255, 255, 0.9);
-            padding: 15px; border-radius: 15px; border: 3px solid #bf953f;
-            text-align: center; font-size: 1.1rem; color: #222;
-            margin-bottom: 10px; display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 85%; background: rgba(255, 255, 255, 0.98);
+            padding: 20px; border-radius: 15px; border: 3px solid #bf953f;
+            text-align: center; font-size: 1.15rem; color: #222;
+            margin-bottom: 20px; display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            line-height: 1.5;
         }
 
         .vdo-container { width: 100%; height: 100%; background: #000; display: flex; align-items: center; }
         video { width: 100%; height: auto; }
-
-        .step-counter {
-            position: absolute; top: 15px; right: 15px;
-            background: rgba(0,0,0,0.6); color: #fff;
-            padding: 6px 15px; border-radius: 20px; font-size: 14px; z-index: 10;
-        }
     </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+    <source src="https://res.cloudinary.com/dl5s23mrx/video/upload/v1775636309/YouTube_Media_tF_bSujYr-E_009_128k_apykmk.mp3" type="audio/mpeg">
 </audio>
 
 <div class="app-container">
-
     <div id="page1" class="page active">
-        <img src="https://i.ibb.co/FLWZPNBW/1.png" class="bg-img">
+        <img src="https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638983/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_6_put9vc.png" class="bg-img">
         <div class="btn-wrapper">
             <button class="btn-main" onclick="startApp()">✓ กดเข้าร่วมพิธีรดน้ำ</button>
         </div>
     </div>
 
     <div id="page2" class="page">
-        <img src="https://i.ibb.co/67b9cn5J/3.png" class="bg-img">
+        <img src="https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638921/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_7_bk0vjv.png" class="bg-img">
         <div class="btn-wrapper">
             <button class="btn-main" onclick="startCeremony()" style="background: var(--blue-deep); color: white; border-color: #fff;">
                 เริ่มรดน้ำท่านแรก >
@@ -84,15 +78,12 @@
     </div>
 
     <div id="page3" class="page">
-        <div class="step-counter" id="stepLabel">ท่านที่ 1/5</div>
-        
         <div id="stillPhase" style="height: 100%;">
             <img id="bossPic" src="" class="bg-img">
             <div class="btn-wrapper">
                 <button class="btn-main" onclick="runWaterVdo()">💧 กดรดน้ำขอพร</button>
             </div>
         </div>
-
         <div id="vdoPhase" class="vdo-container" style="display:none;">
             <video id="vdoPlayer" playsinline muted>
                 <source id="vdoSrc" src="" type="video/mp4">
@@ -103,45 +94,46 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
     const data = [
-        { img: 'https://i.ibb.co/xSNBcwzy/4.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775629825/Man_receiving_water_202604081322_cu8y3d.mp4' },
-        { img: 'https://i.ibb.co/Myk7z9qd/5.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775629823/Man_receiving_water_202604081328_ojpwzo.mp4' },
-        { img: 'https://i.ibb.co/dJ3srsHk/6.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775632464/Woman_receiving_water_202604081413_dfhz7x.mp4' },
-        { img: 'https://i.ibb.co/tptknh7v/7.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775631683/Man_receives_water__202604081358_vptyar.mp4' },
-        { img: 'https://i.ibb.co/TBWN97ND/Gemini-Generated-Image-u2lu3mu2lu3mu2lu.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775632142/Woman_pouring_water_202604081408_mqtooh.mp4' }
+        { img: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775639012/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_10_n7jun1.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775629825/Man_receiving_water_202604081322_cu8y3d.mp4' },
+        { img: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638965/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_8_ooi3o9.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775629823/Man_receiving_water_202604081328_ojpwzo.mp4' },
+        { img: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775639095/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_11_t9zgzw.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775632464/Woman_receiving_water_202604081413_dfhz7x.mp4' },
+        { img: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638921/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_5_p28fgy.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775631683/Man_receives_water__202604081358_vptyar.mp4' },
+        { img: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638964/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_9_nzzh4v.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775636857/Woman_receiving_water_202604081527_kabv6t.mp4' }
     ];
 
     const wishes = [
-        "ขอให้ปีใหม่ไทยนี้ มีแต่ความสุขกายสบายใจ สุขภาพแข็งแรงครับ",
-        "ขอให้อำนาจคุณพระศรีรัตนตรัย ดลบันดาลให้ท่านพบแต่ความเจริญรุ่งเรืองครับ",
-        "ขอให้ท่านมีความสุขสดชื่นเหมือนสายน้ำสงกรานต์ตลอดปีครับ",
-        "ขอให้ท่านและครอบครัวประสบแต่โชคลาภและความสำเร็จในทุกสิ่งครับ",
-        "ขอขอบคุณในความเมตตา ขอให้ท่านสุขสำราญเบิกบานใจครับ"
+        "ขอให้มีความสุขสดชื่น เบิกบานใจ สุภาพแข็งแรงตลอดปีใหม่ไทย",
+        "ขออำนาจคุณพระศรีรัตนตรัยดลบันดาลให้ประสบแต่ความสุขและความเจริญ",
+        "ขอให้ปีใหม่นี้เป็นปีที่เต็มไปด้วยความสำเร็จรุ่งเรืองและโชคลาภ",
+        "ขอให้มีพลังกายพลังใจที่เข้มแข็ง พร้อมนำพาองค์กรสู่ความก้าวหน้า",
+        "ขอให้สิ่งศักดิ์สิทธิ์คุ้มครองให้แคล้วคลาดปลอดภัยจากอุปสรรคทั้งปวง",
+        "ขอให้ทุกวันของปีใหม่ไทยเต็มไปด้วยรอยยิ้มและความราบรื่นในการทำงาน",
+        "ขอให้มีความสุขสำราญใจ ร่างกายสมบูรณ์แข็งแรง ปราศจากโรคภัยไข้เจ็บ",
+        "ขอให้เป็นที่รักและเคารพของลูกน้องและเพื่อนร่วมงานสืบไป",
+        "ขอให้มีโชคมีชัย ร่ำรวยเงินทองและบารมีตลอดปีและตลอดไป",
+        "ขอให้สายน้ำสงกรานต์ชะล้างความทุกข์โศก และนำพาความสดใสมาสู่ชีวิต"
     ];
 
     let currentIdx = 0;
 
-    // เริ่มแอปและเล่นเพลง
     function startApp() {
-        document.getElementById('bgMusic').play().catch(() => {
-            console.log("ต้องการการโต้ตอบก่อนเล่นเพลง");
-        });
-        goToPage(2);
+        document.getElementById('bgMusic').play().catch(e => console.log("Audio blocked"));
+        goToPage('page2');
     }
 
-    function goToPage(n) {
+    function goToPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page' + n).classList.add('active');
+        document.getElementById(pageId).classList.add('active');
     }
 
     function startCeremony() {
         currentIdx = 0;
         setupBoss();
-        goToPage(3);
+        goToPage('page3');
     }
 
     function setupBoss() {
@@ -149,8 +141,6 @@
         document.getElementById('bossPic').src = item.img;
         document.getElementById('vdoSrc').src = item.vdo;
         document.getElementById('vdoPlayer').load();
-        document.getElementById('stepLabel').innerText = `ท่านที่ ${currentIdx + 1}/5`;
-        
         document.getElementById('stillPhase').style.display = 'block';
         document.getElementById('vdoPhase').style.display = 'none';
         document.getElementById('afterVdo').style.display = 'none';
@@ -162,14 +152,12 @@
         document.getElementById('vdoPhase').style.display = 'flex';
         const v = document.getElementById('vdoPlayer');
         v.play();
-
         v.onended = function() {
             const msg = wishes[Math.floor(Math.random() * wishes.length)];
             const box = document.getElementById('blessText');
             box.innerText = msg;
             box.style.display = 'block';
             document.getElementById('afterVdo').style.display = 'flex';
-            
             const btn = document.getElementById('nextBtn');
             btn.innerText = (currentIdx === data.length - 1) ? "จบพิธี (กลับหน้าแรก)" : "ไปรดน้ำท่านถัดไป >";
         };
@@ -184,6 +172,5 @@
         }
     }
 </script>
-
 </body>
 </html>
