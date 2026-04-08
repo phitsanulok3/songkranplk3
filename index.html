@@ -14,10 +14,14 @@
         .page { display: none; width: 100%; height: 100%; position: absolute; top:0; left:0; }
         .page.active { display: block; }
         
-        /* ตั้งค่าให้ภาพอยู่ข้างหลังและไม่ขวางการคลิกปุ่ม */
         .bg-img { width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 1; pointer-events: none; }
         
-        .btn-wrapper { position: absolute; bottom: 8%; width: 100%; display: flex; justify-content: center; z-index: 1000; }
+        /* ปุ่มทั่วไป */
+        .btn-wrapper { position: absolute; bottom: 10%; width: 100%; display: flex; justify-content: center; z-index: 1000; }
+        
+        /* ✅ ปรับเฉพาะปุ่มในหน้าที่ 2 ให้ลงมาต่ำกว่าปกติ (เปลี่ยนจาก 10% เป็น 5%) */
+        #page2 .btn-wrapper { bottom: 5%; }
+
         .btn-main { 
             background: var(--gold); padding: 18px; width: 85%; border-radius: 50px; 
             border: 2px solid #aa771c; font-size: 20px; font-weight: bold; cursor: pointer;
@@ -67,7 +71,6 @@
 </div>
 
 <script>
-    // ข้อมูลรูปภาพและวิดีโอ (ภาษาอังกฤษล้วน)
     const dataList = [
         { i: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775641746/person_1_o3kfpl.png', v: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775629825/Man_receiving_water_202604081322_cu8y3d.mp4' },
         { i: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775641747/person_2_nyg6ow.png', v: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775629823/Man_receiving_water_202604081328_ojpwzo.mp4' },
@@ -110,7 +113,6 @@
         document.getElementById('bossPic').src = dataList[idx].i;
         document.getElementById('vdoSrc').src = dataList[idx].v;
         document.getElementById('vdoPlayer').load();
-        
         document.getElementById('stillPhase').style.display = 'block';
         document.getElementById('vdoPhase').style.display = 'none';
         document.getElementById('nextAction').style.display = 'none';
