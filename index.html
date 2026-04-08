@@ -3,93 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>รดน้ำขอพรผู้บริหาร สพป.พิษณุโลก เขต 3</title>
+    <title>รดน้ำขอพร สพป.พิษณุโลก เขต 3</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold-grad: linear-gradient(0deg, #8a5a12 0%, #b38728 50%, #fcf6ba 100%);
-        }
+        :root { --gold: linear-gradient(0deg, #8a5a12, #fcf6ba); }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            margin: 0; padding: 0; background: #000; 
-            font-family: 'Sarabun', sans-serif; 
-            width: 100vw; height: 100vh; overflow: hidden; 
-        }
-
-        .app-container {
-            width: 100%; max-width: 500px; height: 100%; margin: 0 auto;
-            background: #fff; position: relative; overflow: hidden;
-        }
-
-        .page { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+        body { margin: 0; background: #000; font-family: 'Sarabun', sans-serif; width: 100vw; height: 100vh; overflow: hidden; }
+        .app-container { width: 100%; max-width: 500px; height: 100%; margin: 0 auto; background: #fff; position: relative; }
+        .page { display: none; width: 100%; height: 100%; position: absolute; }
         .page.active { display: block; }
-
-        /* ปรับปรุงส่วนแสดงรูปภาพ */
-        .bg-img { 
-            width: 100%; height: 100%; 
-            object-fit: cover; 
-            position: absolute; top: 0; left: 0; z-index: 1;
+        .bg-img { width: 100%; height: 100%; object-fit: cover; position: absolute; z-index: 1; }
+        .btn-wrapper { position: absolute; bottom: 10%; width: 100%; display: flex; justify-content: center; z-index: 100; }
+        .btn-main { 
+            background: var(--gold); padding: 15px 30px; width: 80%; border-radius: 50px; 
+            border: 2px solid #aa771c; font-size: 20px; font-weight: bold; cursor: pointer;
         }
-
-        .btn-wrapper {
-            position: absolute; bottom: 8%; left: 0; width: 100%;
-            display: flex; flex-direction: column; align-items: center; z-index: 99;
-        }
-        
-        .btn-main {
-            background: var(--gold-grad);
-            color: #403010; border: 2px solid #aa771c;
-            padding: 16px 0; width: 85%; border-radius: 50px;
-            font-size: 20px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-        }
-
-        .blessing-overlay {
-            width: 85%; background: rgba(255, 255, 255, 0.95);
-            padding: 20px; border-radius: 15px; border: 3px solid #bf953f;
-            text-align: center; font-size: 1.1rem; color: #222;
-            margin-bottom: 20px; display: none; z-index: 100;
-        }
-
         .vdo-container { width: 100%; height: 100%; background: #000; display: flex; align-items: center; z-index: 50; }
         video { width: 100%; height: auto; }
+        .bless-box { 
+            position: absolute; bottom: 25%; width: 80%; left: 10%; background: rgba(255,255,255,0.9);
+            padding: 15px; border-radius: 15px; border: 2px solid #bf953f; text-align: center; display: none; z-index: 110;
+        }
     </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop preload="auto" crossorigin="anonymous">
+<audio id="bgMusic" loop crossorigin="anonymous">
     <source src="https://res.cloudinary.com/dl5s23mrx/video/upload/v1775636309/YouTube_Media_tF_bSujYr-E_009_128k_apykmk.mp3" type="audio/mpeg">
 </audio>
 
 <div class="app-container">
     <div id="page1" class="page active">
         <img src="https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638983/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_6_put9vc.png" class="bg-img">
-        <div class="btn-wrapper">
-            <button class="btn-main" onclick="startApp()">✓ กดเข้าร่วมพิธีรดน้ำ</button>
-        </div>
+        <div class="btn-wrapper"><button class="btn-main" onclick="nextPage(2)">✓ กดเข้าร่วมพิธี</button></div>
     </div>
 
     <div id="page2" class="page">
         <img src="https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638921/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_7_bk0vjv.png" class="bg-img">
-        <div class="btn-wrapper">
-            <button class="btn-main" onclick="startCeremony()" style="background: #001ba0; color: white; border-color: #fff;">เริ่มรดน้ำท่านแรก ></button>
-        </div>
+        <div class="btn-wrapper"><button class="btn-main" onclick="startCeremony()">เริ่มรดน้ำท่านแรก ></button></div>
     </div>
 
     <div id="page3" class="page">
-        <div id="stillPhase" style="height: 100%;">
+        <div id="stillPhase" style="height:100%">
             <img id="bossPic" src="" class="bg-img">
-            <div class="btn-wrapper">
-                <button class="btn-main" onclick="runWaterVdo()">💧 กดรดน้ำขอพร</button>
-            </div>
+            <div class="btn-wrapper"><button class="btn-main" onclick="playVdo()">💧 กดรดน้ำขอพร</button></div>
         </div>
-        <div id="vdoPhase" class="vdo-container" style="display:none;">
-            <video id="vdoPlayer" playsinline muted>
-                <source id="vdoSrc" src="" type="video/mp4">
-            </video>
-            <div class="btn-wrapper" id="afterVdo" style="display:none;">
-                <div id="blessText" class="blessing-overlay"></div>
-                <button id="nextBtn" class="btn-main" onclick="nextStep()">ไปรดน้ำท่านถัดไป ></button>
+        <div id="vdoPhase" class="vdo-container" style="display:none">
+            <video id="vdoPlayer" playsinline muted><source id="vdoSrc" src="" type="video/mp4"></video>
+            <div id="blessText" class="bless-box"></div>
+            <div class="btn-wrapper" id="nextAction" style="display:none">
+                <button id="btnNext" class="btn-main" onclick="nextBoss()">ไปท่านถัดไป ></button>
             </div>
         </div>
     </div>
@@ -104,59 +67,49 @@
         { img: 'https://res.cloudinary.com/dl5s23mrx/image/upload/v1775638964/%E0%B8%A3%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3_%E0%B8%9C%E0%B8%AD_9_nzzh4v.png', vdo: 'https://res.cloudinary.com/dl5s23mrx/video/upload/v1775636857/Woman_receiving_water_202604081527_kabv6t.mp4' }
     ];
 
-    const wishes = [
-        "ขอให้มีความสุขสดชื่น เบิกบานใจ สุขภาพแข็งแรงตลอดปีใหม่ไทย",
-        "ขออำนาจคุณพระศรีรัตนตรัยดลบันดาลให้ประสบแต่ความสุขและความเจริญ",
-        "ขอให้ปีใหม่นี้เป็นปีที่เต็มไปด้วยความสำเร็จรุ่งเรืองและโชคลาภ",
-        "ขอให้มีพลังกายพลังใจที่เข้มแข็ง พร้อมนำพาองค์กรสู่ความก้าวหน้า",
-        "ขอให้สิ่งศักดิ์สิทธิ์คุ้มครองให้แคล้วคลาดปลอดภัยจากอุปสรรคทั้งปวง",
-        "ขอให้ทุกวันของปีใหม่ไทยเต็มไปด้วยรอยยิ้มและความราบรื่นในการทำงาน",
-        "ขอให้มีความสุขสำราญใจ ร่างกายสมบูรณ์แข็งแรง ปราศจากโรคภัยไข้เจ็บ",
-        "ขอให้เป็นที่รักและเคารพของลูกน้องและเพื่อนร่วมงานสืบไป",
-        "ขอให้มีโชคมีชัย ร่ำรวยเงินทองและบารมีตลอดปีและตลอดไป",
-        "ขอให้สายน้ำสงกรานต์ชะล้างความทุกข์โศก และนำพาความสดใสมาสู่ชีวิต"
-    ];
+    const wishes = ["ขอให้มีความสุขสดชื่นตลอดปีใหม่ไทย", "ขอให้สุขภาพแข็งแรง ประสบความสำเร็จ", "ขอให้มีรอยยิ้มและความราบรื่นในการทำงาน"];
+    let current = 0;
 
-    let currentIdx = 0;
-
-    function startApp() {
-        document.getElementById('bgMusic').play().catch(e => console.log("Music blocked"));
-        goToPage('page2');
-    }
-
-    function goToPage(pageId) {
+    function nextPage(n) {
+        if(n === 2) document.getElementById('bgMusic').play().catch(() => {});
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
+        document.getElementById('page' + n).classList.add('active');
     }
 
     function startCeremony() {
-        currentIdx = 0;
-        setupBoss();
-        goToPage('page3');
+        current = 0;
+        loadBoss();
+        nextPage(3);
     }
 
-    function setupBoss() {
-        const item = data[currentIdx];
-        document.getElementById('bossPic').src = item.img;
-        document.getElementById('vdoSrc').src = item.vdo;
+    function loadBoss() {
+        document.getElementById('bossPic').src = data[current].img;
+        document.getElementById('vdoSrc').src = data[current].vdo;
         document.getElementById('vdoPlayer').load();
-        
         document.getElementById('stillPhase').style.display = 'block';
         document.getElementById('vdoPhase').style.display = 'none';
-        document.getElementById('afterVdo').style.display = 'none';
+        document.getElementById('nextAction').style.display = 'none';
         document.getElementById('blessText').style.display = 'none';
     }
 
-    function runWaterVdo() {
+    function playVdo() {
         document.getElementById('stillPhase').style.display = 'none';
         document.getElementById('vdoPhase').style.display = 'flex';
         const v = document.getElementById('vdoPlayer');
         v.play();
-        v.onended = function() {
-            const msg = wishes[Math.floor(Math.random() * wishes.length)];
-            const box = document.getElementById('blessText');
-            box.innerText = msg;
-            box.style.display = 'block';
-            document.getElementById('afterVdo').style.display = 'flex';
-            const btn = document.getElementById('nextBtn');
-            btn.innerText = (currentIdx === data.length - 1) ? "จบพิธี (กลับหน้าแรก)" : "ไปรดน้ำ
+        v.onended = () => {
+            const txt = document.getElementById('blessText');
+            txt.innerText = wishes[Math.floor(Math.random() * wishes.length)];
+            txt.style.display = 'block';
+            document.getElementById('nextAction').style.display = 'flex';
+            document.getElementById('btnNext').innerText = (current === 4) ? "จบพิธี (เริ่มใหม่)" : "ไปท่านถัดไป >";
+        };
+    }
+
+    function nextBoss() {
+        if(current < 4) { current++; loadBoss(); } 
+        else { location.reload(); }
+    }
+</script>
+</body>
+</html>
